@@ -4,6 +4,8 @@
  */
 package kopapirollo;
 
+import java.util.Random;
+import javax.swing.JOptionPane;
 /**
  *
  * @author NagyEszterErzsébet(S
@@ -79,6 +81,11 @@ public class KoPapirOlloGUI extends javax.swing.JFrame {
         );
 
         btnRendben.setText("Rendben");
+        btnRendben.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRendbenActionPerformed(evt);
+            }
+        });
 
         lblGepTippje.setText("...");
         lblGepTippje.setBorder(javax.swing.BorderFactory.createTitledBorder("A gép tippje: "));
@@ -142,6 +149,53 @@ public class KoPapirOlloGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRendbenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRendbenActionPerformed
+        int gt = gepTippje();
+        int felhasznalo_tipp = 0;
+        if (rbtnKo.isSelected()) {
+            felhasznalo_tipp = 1;
+        } else if (rbtnPapir.isSelected()) {
+            felhasznalo_tipp = 2;
+        } else if (rbtnOllo.isSelected()) {
+            felhasznalo_tipp = 3;
+        }
+        eredmeny(gt, felhasznalo_tipp);
+    }//GEN-LAST:event_btnRendbenActionPerformed
+    private int gepTippje() {
+        Random random = new Random();
+        int gTippje = random.nextInt(3) + 1;
+        String gepSzoveg ="";
+        switch (gTippje) {
+            case 1:
+                gepSzoveg="Kő";
+                break;
+            case 2:
+                gepSzoveg="Papír";
+                break;
+            case 3:
+                gepSzoveg="Olló";
+                break;
+            default:
+                break;
+        }
+        lblGepTippje.setText(gepSzoveg);
+        return gTippje;
+    }
+
+    private void eredmeny(int gepTippje, int felhasznalo_tipp) {
+        String eredmenyszoveg = "";
+        if (felhasznalo_tipp - gepTippje == 1 || felhasznalo_tipp - gepTippje == -2) {
+            eredmenyszoveg ="Nyertél!";
+        }
+        else if(felhasznalo_tipp == gepTippje) {
+            eredmenyszoveg ="Döntetlen!";
+        }
+        else{
+            eredmenyszoveg="Sajnos vesztettél!";
+        }
+        lblEredmeny.setText(eredmenyszoveg);
+    }
 
     /**
      * @param args the command line arguments
